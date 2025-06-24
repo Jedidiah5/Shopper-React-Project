@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import logo from './logo.png';
+import { Link } from 'react-router-dom';
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -18,18 +20,18 @@ const Navbar = () => {
           {/* Centered Desktop Navigation Links */}
           <div className="hidden md:flex md:items-center md:justify-center md:flex-1">
             <div className="flex space-x-8">
-              <a href="#" className="relative group text-gray-800 hover:text-orange-500">
+              <Link to="/" className="relative group text-gray-800 hover:text-orange-500">
                 SHOP
                 <span className="block absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
-              </a>
-              <a href="#" className="relative group text-gray-800 hover:text-orange-500">
+              </Link>
+              <Link to="/men" className="relative group text-gray-800 hover:text-orange-500">
                 MEN
                 <span className="block absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
-              </a>
-              <a href="#" className="relative group text-gray-800 hover:text-orange-500">
+              </Link>
+              <Link to="/women" className="relative group text-gray-800 hover:text-orange-500">
                 WOMEN
                 <span className="block absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
-              </a>
+              </Link>
               <a href="#" className="relative group text-gray-800 hover:text-orange-500">
                 KIDS
                 <span className="block absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
