@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { all_products } from '../data/products'
 import { Link } from 'react-router-dom'
+import WomenProduct from './WomenProduct'
+
 
 function DetailsPage() {
   const { id } = useParams();
@@ -123,9 +125,27 @@ function DetailsPage() {
         </div>
       </div>
 
+      <div className="mt-10">
+        <h2 className="text-4xl font-bold mb-4 text-center">Related Products</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          {all_products
+            .filter(p => p.id !== product.id && p.category === product.category)
+            .slice(0, 5)
+            .map(related => (
+              <Link key={related.id} to={`/details/${related.id}`} className="block  rounded-lg p-4">
+                <img src={related.image} alt={related.name} className="h-[450px] w-72  object-cover mb-2 rounded" />
+                <h3 className="text-lg font-semibold">{related.name}</h3>
+                <p className="text-orange-500 font-bold">${related.new_price}</p>
+              </Link>
+            ))}
+        </div>
+      </div>
+
       <div className='mt-10 flex justify-center'>
         <img src="" alt="" /><span className='text-4xl font-bold font-serif'>SHOPPER</span>
       </div>
+
+        
 
       <div className='flex justify-center mt-5'>
           <a className='px-3' href="">Company</a>
