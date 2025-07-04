@@ -5,11 +5,15 @@ import Product from "./components/Product"
 import WomenProduct from "./components/WomenProduct"
 import MenProducts from "./components/MenProducts";
 import WomenProducts from "./components/WomenProducts";
+import CartPage from "./components/CartPage";
+import { CartProvider, useCart } from "./context/CartContext";
+import Notification from "./components/Notification";
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 function AppContent() {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const { notification, setNotification } = useCart();
 
   return (
     <>
@@ -20,7 +24,13 @@ function AppContent() {
         <Route path='/men' element={<MenProducts/>}/>
         <Route path='/women' element={<WomenProducts/>}/>
         <Route path='/details/:id' element={<DetailsPage/>}/>
+        <Route path='/cart' element={<CartPage/>}/>
       </Routes>
+      <Notification
+        message={notification.message}
+        isVisible={notification.show}
+        onClose={() => setNotification({ show: false, message: '' })}
+      />
     </>
   );
 }
@@ -28,7 +38,9 @@ function AppContent() {
 function App() {
   return (
     <Router>
-      <AppContent />
+      <CartProvider>
+        <AppContent />
+      </CartProvider>
     </Router>
   );
 }

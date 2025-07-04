@@ -3,12 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { all_products } from '../data/products'
 import { Link } from 'react-router-dom'
 import WomenProduct from './WomenProduct'
+import { useCart } from '../context/CartContext'
 
 
 function DetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const product = all_products.find(p => p.id === parseInt(id));
+  const { addToCart } = useCart();
 
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
@@ -94,7 +96,10 @@ function DetailsPage() {
                 ))}
               </div>
             </div>
-            <button className="w-full bg-orange-500 text-white py-3 px-6 rounded-lg hover:bg-orange-600 transition-colors">
+            <button 
+              onClick={() => addToCart(product)}
+              className="w-full bg-orange-500 text-white py-3 px-6 rounded-lg hover:bg-orange-600 transition-colors"
+            >
               Add to Cart
             </button>
             

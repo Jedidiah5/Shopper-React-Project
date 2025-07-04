@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import logo from './logo.png';
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { getCartCount } = useCart();
 
   return (
     <nav className="bg-white shadow-md">
@@ -39,11 +41,22 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Mobile Menu Button (Right) */}
-          <div className="md:hidden">
+          {/* Cart Icon and Mobile Menu Button (Right) */}
+          <div className="flex items-center space-x-4">
+            <Link to="/cart" className="relative p-2 text-gray-800 hover:text-orange-500 transition-colors">
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              {getCartCount() > 0 && (
+                <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center min-w-[20px]">
+                  {getCartCount() > 99 ? '99+' : getCartCount()}
+                </span>
+              )}
+            </Link>
+            
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-800 hover:text-blue-600 focus:outline-none"
+              className="md:hidden text-gray-800 hover:text-orange-500 focus:outline-none p-2"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {isOpen ? (
