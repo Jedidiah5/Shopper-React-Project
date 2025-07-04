@@ -6,31 +6,50 @@ const CheckoutForm = () => {
   const { items, getCartTotal, clearCart } = useCart();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showSavedMessage, setShowSavedMessage] = useState(false);
 
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    country: '',
-    cardNumber: '',
-    cardName: '',
-    expiryDate: '',
-    cvv: ''
+  const [formData, setFormData] = useState(() => {
+    // Load saved form data from localStorage on component mount
+    const savedData = localStorage.getItem('checkoutFormData');
+    return savedData ? JSON.parse(savedData) : {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      address: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      country: '',
+      cardNumber: '',
+      cardName: '',
+      expiryDate: '',
+      cvv: ''
+    };
   });
 
   const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
+    const updatedFormData = {
+      ...formData,
       [name]: value
-    }));
+    };
+    setFormData(updatedFormData);
+    
+    // Save to localStorage (excluding sensitive payment data)
+    const dataToSave = { ...updatedFormData };
+    delete dataToSave.cardNumber;
+    delete dataToSave.cardName;
+    delete dataToSave.expiryDate;
+    delete dataToSave.cvv;
+    localStorage.setItem('checkoutFormData', JSON.stringify(dataToSave));
+    
+    // Show saved message briefly
+    setShowSavedMessage(true);
+    setTimeout(() => setShowSavedMessage(false), 2000);
+    
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
@@ -108,8 +127,9 @@ const CheckoutForm = () => {
         billingInfo: formData
       });
 
-      // Clear cart and redirect to success page
+      // Clear cart and form data, then redirect to success page
       clearCart();
+      localStorage.removeItem('checkoutFormData');
       navigate('/checkout-success');
     } catch (error) {
       console.error('Checkout error:', error);
@@ -142,6 +162,30 @@ const CheckoutForm = () => {
     return v;
   };
 
+  const clearForm = () => {
+    setFormData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      address: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      country: '',
+      cardNumber: '',
+      cardName: '',
+      expiryDate: '',
+      cvv: ''
+    });
+    localStorage.removeItem('checkoutFormData');
+    setErrors({});
+  };
+
+  const hasSavedData = () => {
+    return localStorage.getItem('checkoutFormData') !== null;
+  };
+
   if (items.length === 0) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -161,7 +205,27 @@ const CheckoutForm = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-800 mb-8">Checkout</h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-800">Checkout</h1>
+        <div className="flex space-x-3">
+          {hasSavedData() && (
+            <button
+              type="button"
+              onClick={clearForm}
+              className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              Clear Form
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => navigate('/cart')}
+            className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            Back to Cart
+          </button>
+        </div>
+      </div>
       
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Billing Information */}
@@ -439,6 +503,18 @@ const CheckoutForm = () => {
           </div>
         </div>
       </form>
+      
+      {/* Saved message notification */}
+      {showSavedMessage && (
+        <div className="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50">
+          <div className="flex items-center space-x-2">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <span>Information saved</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
