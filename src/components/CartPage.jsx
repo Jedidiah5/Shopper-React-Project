@@ -1,9 +1,10 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const CartPage = () => {
   const { items, removeFromCart, updateQuantity, getCartTotal, clearCart } = useCart();
+  const navigate = useNavigate();
 
   if (items.length === 0) {
     return (
@@ -102,7 +103,11 @@ const CartPage = () => {
             </div>
 
             <div className="space-y-3">
-              <button className="w-full bg-orange-500 text-white py-3 px-6 rounded-lg hover:bg-orange-600 transition-colors font-semibold">
+              <button
+                type="button"
+                onClick={() => navigate('/checkout')}
+                className="w-full bg-orange-500 text-white py-3 px-6 rounded-lg hover:bg-orange-600 transition-colors font-semibold"
+              >
                 Proceed to Checkout
               </button>
               
