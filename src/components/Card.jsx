@@ -12,27 +12,46 @@ function Card({all_products}) {
     addToCart(all_products);
   };
 
+  const handleView = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    window.location.href = `/details/${all_products.id}`;
+  };
+
   return (
-    <div>
-      <Link to={`/details/${all_products.id}`}>
-        <div className='mt-4 lg:w-[325px] hover:scale-105 transition-transform duration-300 relative group'>
-          <img src={all_products.image} alt="" className='h-[450px] w-72 mt-4 lg:w-[325px]'></img>
-          <p className='text-md text-gray-500'>{all_products.name}</p>
-          <p className='text-md text-gray-500'>{all_products.category}</p>
-          <div className='flex gap-2'>
-            <p className='text-md text-gray-500'>${all_products.new_price}</p>
-            <p className='text-md text-gray-500 line-through'>${all_products.old_price}</p>
-          </div>
-          
-          {/* Add to Cart Button */}
+    <div className='mt-4 lg:w-[325px] relative group'>
+      <div className='relative overflow-hidden'>
+        <img 
+          src={all_products.image} 
+          alt="" 
+          className='h-[450px] w-72 mt-4 lg:w-[325px] transition-transform duration-300 group-hover:scale-110'
+        />
+        
+        {/* Overlay with buttons */}
+        <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
+          <button
+            onClick={handleView}
+            className="bg-white text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors font-semibold"
+          >
+            View
+          </button>
           <button
             onClick={handleAddToCart}
-            className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-orange-600"
+            className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors font-semibold"
           >
-            Add to Cart
+            Cart
           </button>
         </div>
-      </Link>
+      </div>
+      
+      <div className="mt-2">
+        <p className='text-md text-gray-500'>{all_products.name}</p>
+        <p className='text-md text-gray-500'>{all_products.category}</p>
+        <div className='flex gap-2'>
+          <p className='text-md text-gray-500'>${all_products.new_price}</p>
+          <p className='text-md text-gray-500 line-through'>${all_products.old_price}</p>
+        </div>
+      </div>
     </div>
   )
 }
