@@ -19,37 +19,37 @@ function Card({all_products}) {
   };
 
   return (
-    <div className='mt-4 lg:w-[325px] relative group'>
-      <div className='relative overflow-hidden'>
+    <div className='mt-4 w-full relative group'>
+      <div className='relative overflow-hidden rounded-lg'>
         <img 
           src={all_products.image} 
-          alt="" 
-          className='h-[450px] w-72 mt-4 lg:w-[325px] transition-transform duration-300 group-hover:scale-110'
+          alt={all_products.name} 
+          className='h-[300px] sm:h-[350px] md:h-[400px] lg:h-[450px] w-full object-cover transition-transform duration-300 group-hover:scale-105'
         />
         
         {/* Overlay with buttons */}
-        <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
+        <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-2 sm:space-x-4">
           <button
             onClick={handleView}
-            className="bg-white text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors font-semibold"
+            className="bg-white text-gray-800 px-3 py-2 sm:px-4 sm:py-2 rounded-lg hover:bg-gray-100 transition-colors font-semibold text-sm sm:text-base"
           >
             View
           </button>
           <button
             onClick={handleAddToCart}
-            className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors font-semibold"
+            className="bg-orange-500 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-lg hover:bg-orange-600 transition-colors font-semibold text-sm sm:text-base"
           >
             Cart
           </button>
         </div>
       </div>
       
-      <div className="mt-2">
-        <p className='text-md text-gray-500'>{all_products.name}</p>
-        <p className='text-md text-gray-500'>{all_products.category}</p>
-        <div className='flex gap-2'>
-          <p className='text-md text-gray-500'>${all_products.new_price}</p>
-          <p className='text-md text-gray-500 line-through'>${all_products.old_price}</p>
+      <div className="mt-3 px-2">
+        <p className='text-sm sm:text-md text-gray-500 font-medium'>{all_products.name}</p>
+        <p className='text-xs sm:text-sm text-gray-400'>{all_products.category}</p>
+        <div className='flex gap-2 mt-1'>
+          <p className='text-sm sm:text-md text-gray-800 font-semibold'>${all_products.new_price}</p>
+          <p className='text-xs sm:text-sm text-gray-400 line-through'>${all_products.old_price}</p>
         </div>
       </div>
     </div>

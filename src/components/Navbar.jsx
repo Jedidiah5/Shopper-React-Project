@@ -13,10 +13,10 @@ const Navbar = () => {
         {/* Flex container for logo + nav + mobile button */}
         <div className="flex justify-between items-center h-16">
           
-          {/* Logo (Left) - Optional: Hide on small screens if needed */}
-          <div className="flex items-center md:absolute md:left-8">
-          <img src={logo} alt="logo" className='w-16 h-16' />
-          <span className="text-lg font-bold text-gray-800">SHOPPER</span>
+          {/* Logo (Left) - Responsive sizing */}
+          <div className="flex items-center">
+            <img src={logo} alt="logo" className='w-12 h-12 sm:w-16 sm:h-16' />
+            <span className="text-base sm:text-lg font-bold text-gray-800 ml-2">SHOPPER</span>
           </div>
 
           {/* Centered Desktop Navigation Links */}
@@ -42,9 +42,9 @@ const Navbar = () => {
           </div>
 
           {/* Cart Icon and Mobile Menu Button (Right) */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <Link to="/cart" className="relative p-2 text-gray-800 hover:text-orange-500 transition-colors">
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
               {getCartCount() > 0 && (
@@ -58,7 +58,7 @@ const Navbar = () => {
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden text-gray-800 hover:text-orange-500 focus:outline-none p-2"
             >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {isOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 ) : (
@@ -71,12 +71,32 @@ const Navbar = () => {
 
         {/* Mobile Dropdown Menu */}
         {isOpen && (
-          <div className="md:hidden pb-4">
-            <div className="flex flex-col space-y-2 px-2 pt-2">
-              <a href="#" className="text-gray-800 hover:bg-gray-100 px-3 py-2 rounded">Home</a>
-              <a href="#" className="text-gray-800 hover:bg-gray-100 px-3 py-2 rounded">Shop</a>
-              <a href="#" className="text-gray-800 hover:bg-gray-100 px-3 py-2 rounded">About</a>
-              <a href="#" className="text-gray-800 hover:bg-gray-100 px-3 py-2 rounded">Contact</a>
+          <div className="md:hidden pb-4 border-t border-gray-200">
+            <div className="flex flex-col space-y-1 px-2 pt-2">
+              <Link 
+                to="/" 
+                className="text-gray-800 hover:bg-gray-100 px-3 py-2 rounded transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                SHOP
+              </Link>
+              <Link 
+                to="/men" 
+                className="text-gray-800 hover:bg-gray-100 px-3 py-2 rounded transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                MEN
+              </Link>
+              <Link 
+                to="/women" 
+                className="text-gray-800 hover:bg-gray-100 px-3 py-2 rounded transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                WOMEN
+              </Link>
+              <a href="#" className="text-gray-800 hover:bg-gray-100 px-3 py-2 rounded transition-colors">
+                KIDS
+              </a>
             </div>
           </div>
         )}
