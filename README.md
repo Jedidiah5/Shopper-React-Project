@@ -60,7 +60,9 @@ npm install
 npm start
 
 📂 Project Structure
+
 backend/
+
 ├──  controller/     # Handles request logic
 
 ├──  middleware/     # Auth & error handling
