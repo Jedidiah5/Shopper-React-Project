@@ -62,10 +62,15 @@ npm start
 📂 Project Structure
 backend/
 ├──  controller/     # Handles request logic
+
 ├──  middleware/     # Auth & error handling
+
 ├──  model/          # Mongoose schemas (User, Product, Cart, Order)
+
 ├──  validator/      # Joi validators
+
 ├──  index.js        # Entry point
+
 └──  .env            # Environment variables (ignored in git)
 
 🔑 Features
