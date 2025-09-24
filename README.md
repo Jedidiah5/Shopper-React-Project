@@ -75,6 +75,7 @@ backend/
 
 └──  .env            # Environment variables (ignored in git)
 
+
 🔑 Features
 🔑 User Authentication (Register / Login with JWT)
 
