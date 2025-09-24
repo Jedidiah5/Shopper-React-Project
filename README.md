@@ -48,10 +48,15 @@ The backend powers the API for the Shopper project. It handles authentication, p
 ### 🚀 Getting Started
 
 #### 1️⃣ Navigate into the backend folder
+
 cd backend
+
 2️⃣ Install dependencies
+
 npm install
+
 3️⃣ Run the backend server
+
 npm start
 
 📂 Project Structure
