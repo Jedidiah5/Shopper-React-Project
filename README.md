@@ -65,9 +65,13 @@ backend/
 
 🔑 Features
 🔑 User Authentication (Register / Login with JWT)
+
 👨‍💼 Admin Role → manage products
+
 🛍️ Products → CRUD endpoints
+
 🛒 Cart → add/remove/update products
+
 📦 Orders → checkout and order management
 
 ## License
